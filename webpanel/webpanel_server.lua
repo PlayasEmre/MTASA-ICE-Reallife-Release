@@ -1,5 +1,6 @@
 --//                                                  \\
 --||   Project: MTA - German ICE Reallife Gamemode    ||
+--||   Developers: PlayasEmre                         ||
 --||   Web-Panel Schnittstelle (CP2-Reallife)         ||
 --||   Version: 1.0                                   ||
 --\\                                                  //

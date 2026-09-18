@@ -1,5 +1,6 @@
 --//                                                  \\
 --||   Project: MTA - German ICE Reallife Gamemode    ||
+--||   Developers: PlayasEmre                         ||
 --||   Gluecksrad - Client ( 3D-Weltrad + Ticketmenue )||
 --\\                                                  //
 
