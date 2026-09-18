@@ -255,7 +255,7 @@ $LogNames			= array(
 	die MySQL-Zugangsdaten muessen dann unten manuell eingetragen werden.
 	Beispiele:
 	define('ICE_RESOURCE_PFAD', 'C:\\MTA San Andreas 1.6\\server\\mods\\deathmatch\\resources\\ICE');
-	define('ICE_RESOURCE_PFAD', 'C:\\Users\\emres\\Desktop\\ICE-Reallife');
+	define('ICE_RESOURCE_PFAD', 'C:\\Users\\User\\Desktop\\ICE-Reallife');
 */
 define('ICE_RESOURCE_PFAD', 'C:\Program Files (x86)\MTA San Andreas 1.6\server\mods\deathmatch\resources\ICE');
 
@@ -273,7 +273,7 @@ define('ICE_RESOURCE_PFAD', 'C:\Program Files (x86)\MTA San Andreas 1.6\server\m
 */
 function iceStandardMysqlZugangsdaten() {
 	// Fallback, falls mysql_start.lua nicht automatisch gelesen werden kann.
-	return array("127.0.0.1", "root", "", "reallife", 3306);
+	return array("IP", "USER", "Passwort", "Datenbank", 3306);
 }
 
 function iceLiesMysqlZugangsdaten() {
@@ -333,11 +333,11 @@ if (!$mySQLcon->connect_errno) {
     Bei http_dos_exclude und auth_serial_http_ip_exceptions die IP-Adresse des Webservers eintragen.
 	Bsp.: <http_dos_exclude>8.8.8.8</http_dos_exclude> <auth_serial_http_ip_exceptions>8.8.8.8</auth_serial_http_ip_exceptions>
 */
-define('MTA_IP',			'127.0.0.1');
+define('MTA_IP',			'IP');
 define('MTA_PORT',			'22003');
 define('MTA_HTTP_PORT',		'22005');
-define('MTA_USER',			'Emre192'); // Account benötigt Admin-Rechte!
-define('MTA_PASS',			'emre1234');
+define('MTA_USER',			'Admin-USER'); // Account benötigt Admin-Rechte!
+define('MTA_PASS',			'Admin-Passwort');
 
 /*
 	Zugangscode für die HTTP-Schnittstelle (7 Ziffern) - meist NICHT nötig.
