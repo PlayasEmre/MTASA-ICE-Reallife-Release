@@ -1,0 +1,16 @@
+﻿--//                                                  \\
+--||   Project: MTA - German ICE Reallife Gamemode    ||
+--||   Developers: PlayasEmre                         ||
+--||   Version: 5.0                                   ||
+--\\                                                  //
+
+function VierNullVier_func ()
+
+	local img = createBasicPage ( "white" )
+	gLabel["404-1"] = guiCreateLabel(170,135,999,999,"Fehler 404:\nNot found.",false,img)
+	guiLabelSetColor(gLabel["404-1"],0,0,0)
+	guiLabelSetVerticalAlign(gLabel["404-1"],"top")
+	guiLabelSetHorizontalAlign(gLabel["404-1"],"left",false)
+end
+addEvent ( "VierNullVier", true )
+addEventHandler ( "VierNullVier", getRootElement(), VierNullVier_func )

@@ -1,0 +1,22 @@
+# Diesen Ordner nicht über den Browser ausliefern.
+#
+# Hier liegen die Panel-Logs (admin.log, coins.log, login.log, bans.log,
+# loginversuche.json). Ohne diese Datei koennte JEDER sie im Browser lesen:
+#   http://deinserver/CP2-Reallife/logs/admin.log
+# Darin stehen Spielernamen, IP-Adressen und Adminaktionen.
+
+# Apache 2.4
+<IfModule mod_authz_core.c>
+	Require all denied
+</IfModule>
+
+# Apache 2.2 (aeltere Versionen)
+<IfModule !mod_authz_core.c>
+	Order allow,deny
+	Deny from all
+</IfModule>
+
+# Falls jemand die Regeln oben umgeht: PHP hier gar nicht ausfuehren.
+<IfModule mod_php.c>
+	php_flag engine off
+</IfModule>

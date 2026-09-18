@@ -1,0 +1,147 @@
+---------------------------------------------------------------
+--------------------------ICE Skin------------------------------
+---Eigenes Farbschema fuer den ICE Reallife Gamemode.
+---"Sky Blue": weicheres, weniger gesaettigtes Blau als der
+---vorherige "Cobalt Bright"-Ton - dezenter, ruhigerer Look.
+---Nur Farben werden ueberschrieben (siehe DGS/styleManager/
+---styleManager.lua: dgsLoadStyle kopiert das komplette Default-
+---Skin und ersetzt darin nur die hier gesetzten Werte) - Bilder
+---(Checkbox/Radiobutton/Scrollbar-Pfeil) bleiben die Standard-
+---DGS-Bilder, werden aber durch color_f/color_t/cursorColor etc.
+---eingefaerbt.
+---------------------------------------------------------------
+
+	button = {
+		textColor = tocolor(238,244,255,255),
+		color = {
+			tocolor(32,52,78,235),			--Normal
+			tocolor(46,74,108,255),		--Hover
+			tocolor(100,181,246,255),		--Click
+		},
+	},
+
+	checkbox = {
+		textColor = tocolor(238,244,255,255),
+		color_f = {
+			tocolor(150,165,205,255),
+			tocolor(100,181,246,255),
+			tocolor(66,140,205,255),
+		},
+		color_t = {
+			tocolor(100,181,246,255),
+			tocolor(150,205,250,255),
+			tocolor(66,140,205,255),
+		},
+	},
+
+	combobox = {
+		textColor = tocolor(238,244,255,255),
+		color = {
+			tocolor(32,52,78,235),
+			tocolor(46,74,108,255),
+			tocolor(100,181,246,255),
+		},
+		itemColor = {
+			tocolor(20,32,50,255),
+			tocolor(30,46,68,255),
+			tocolor(100,181,246,90),
+		},
+		itemTextColor = tocolor(238,244,255,255),
+	},
+
+	radiobutton = {
+		textColor = tocolor(238,244,255,255),
+		color_f = {
+			tocolor(150,165,205,255),
+			tocolor(100,181,246,255),
+			tocolor(66,140,205,255),
+		},
+		color_t = {
+			tocolor(100,181,246,255),
+			tocolor(150,205,250,255),
+			tocolor(66,140,205,255),
+		},
+	},
+
+	edit = {
+		bgColor = tocolor(30,48,72,255),
+		textColor = tocolor(238,244,255,255),
+		caretColor = tocolor(100,181,246,255),
+		selectColor = tocolor(100,181,246,120),
+		placeHolderColor = tocolor(120,140,180,255),
+	},
+
+	gridlist = {
+		bgColor = tocolor(30,48,72,225),
+		columnColor = tocolor(38,58,84,255),
+		columnTextColor = tocolor(180,200,240,255),
+		rowColor = {
+			tocolor(30,48,72,255),
+			tocolor(46,74,108,140),
+			tocolor(100,181,246,190),
+		},
+		rowTextColor = tocolor(238,244,255,255),
+	},
+
+	label = {
+		textColor = tocolor(238,244,255,255),
+	},
+
+	memo = {
+		bgColor = tocolor(30,48,72,235),
+		textColor = tocolor(238,244,255,255),
+		caretColor = tocolor(100,181,246,255),
+		selectColor = tocolor(100,181,246,120),
+	},
+
+	progressbar = {
+		bgColor = tocolor(38,58,84,235),
+		indicatorColor = tocolor(100,181,246,230),
+	},
+
+	scrollbar = {
+		cursorColor = {
+			tocolor(100,181,246,255),
+			tocolor(150,205,250,255),
+			tocolor(66,140,205,255),
+		},
+		arrowColor = {
+			tocolor(238,244,255,255),
+			tocolor(100,181,246,255),
+			tocolor(66,140,205,255),
+		},
+		troughColor = {
+			tocolor(30,48,72,255),
+			tocolor(30,48,72,255),
+		},
+	},
+
+	tabpanel = {
+		bgColor = tocolor(38,58,84,255),
+		textColor = {
+			tocolor(150,165,205,255),
+			tocolor(238,244,255,255),
+			tocolor(238,244,255,255),
+		},
+	},
+
+	tab = {
+		textColor = tocolor(238,244,255,255),
+		tabColor = {
+			tocolor(38,58,84,180),
+			tocolor(46,74,108,190),
+			tocolor(100,181,246,70),
+		},
+	},
+
+	window = {
+		textColor = tocolor(238,244,255,255),
+		titleColor = tocolor(38,64,96,245),
+		titleColorBlur = tocolor(28,48,72,245),
+		color = tocolor(24,38,58,235),
+		closeButtonColor = {
+			tocolor(0,0,0,0),
+			tocolor(210,90,74,255),
+			tocolor(170,72,60,255),
+		},
+	},

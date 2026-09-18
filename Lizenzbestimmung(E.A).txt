@@ -1,0 +1,19 @@
+Creative Commons Lizenzen Lizenzbestimmung zum Erwerb des Scriptes "ICE-Reallife" und allem was dazu gehört.
+Stand 21:20, 24 Februar 2022
+
+
+§ 1 Nutzungsrechte
+1. Diese Version des ICE-Reallife-Scriptes wird auf Basis einer freiwilligen Vergütung vertrieben. Nach übergabe des Scriptes wird demjenigen, dem das Script von Emre A. (folgend der "Urheber" genannt) übergeben worden ist (folgend der "Lizenzbesitzer" genannt), ein nicht ausschließliches, räumlich unbeschränktes Recht zur Nutzung der Software auf Dauer eingeräumt
+2. Das übergebene Script ist ausschließlich für den Lizenzbesitzer lizensiert und wird ausschließlich diesem gemäß Abs. 1 überlassen.
+3. Ein "Exemplar" des Scriptes berechtigt den Lizenzbesitzer zur Nutzung des Scriptes auf max 1 öffentlichen Hauptserver. Das Script darf zu Testzwecken auf bis zu 1 Testservern verwendet werden, solange dies unter Ausschluss der Öffentlichkeit geschieht und diese nur zu Testzwecken verwendet werden.
+4. Beabsichtigt der Lizenzbesitzer mehr als einen Server mit dem "ICE-Reallife" Script oder einer abwandlung hiervon öffentlich zu nutzen, so muss das Nutzungsrecht entsprechend erweitert werden. Bedeutet, der Lizenzbesitzer ist dazu verpflichtet diese Erweiterung von dem Urheber bewilligen zu lassen. Jede Nutzung über das vereinbarte Maß hinaus ist eine Lizenzwiedrige Handlung, und jeder Lizenzbesitzer ist dazu verpflichtet diese oder ähnliche Fälle sofort an den Urheber des Scriptes mitzuteilen.
+5. Der Lizenzbesitzer ist dazu berechtigt eine Sicherheitskopie zu erstellen und alltägliche Datensicherung vorzunehmen.
+6. Der Lizenzbesitzer ist dazu berechtigt das Script nach seinem belieben zu verändern, darf hierbei aber die Copyrightvermerke des Ursprünglichen Urhebers nicht verändern. Eine Erweiterung des Copyrightvermerks wird gestattet.
+
+§2 Weitergabe
+1. Eine Weitergabe des ICE-Reallife-Scriptes ist Untersagt
+2. Lizenzbesitzer sind dazu berechtigt Codeausschnitte von max. 100 Zeichen und max. 50 Zeilen in Hilfebereichen von Foren zu veröffentlichen, wenn sie bei dem entsprechenden Abschnitt Hilfe zu "Bugs", also Scriptfehler benötigen. Dieses Recht darf nicht dazu benutzt werden Teile des Codes der Öffentlichkeit zur verfügung zu stellen.
+3. Lizenzbesitzer können mit dem Ursprünglichen Urheber Emre A. einen Weiterverkauf einer bearbeiteten Version des Scriptes vereinbaren, solange das Script stark genug Editiert wurde und gegen keine der Lizenzbestimmungen verstoßen wurde. Wann ein Script stark genug Editiert ist, bestimmt der Ursprüngliche Urheber Emre A.
+
+§3 Verstoß
+1. Wird gegen eine der in diesem Dokument genannten Bedingungen verstoßen, so erlischt das Nutzungsrecht mit sofortiger Wirkung!

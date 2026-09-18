@@ -1,0 +1,376 @@
+﻿--//               Project: MTA - German ICE Reallife Gamemode               \\
+--||               Developers: PlayasEmre                                  ||
+--||               Version: 5.1 (DGS-Fix von Gemini)                       ||
+--\\                                                                       //
+
+function showStats ()
+	if gWindow["stats"] then
+		createStatsWindow ()
+	else
+		createStatsWindow ()
+	end
+end
+
+function createStatsWindow()
+    -- KORRIGIERT: guiGetText -> dgsGetText
+	local buttonText = dgsGetText ( gButtons["selfstatus"] ) 
+	if buttonText == "Sucht" then
+		showAddictInfo_func ( false )
+        -- KORRIGIERT: guiSetText -> dgsSetText
+		dgsSetText ( gButtons["selfstatus"], "Achiev-\nments" ) 
+	elseif buttonText == "Achiev-\nments" then
+		showAchievmentWindow ()
+		dgsSetVisible ( gWindow["suchtInfo"], false )
+        -- KORRIGIERT: guiSetText -> dgsSetText
+		dgsSetText ( gButtons["selfstatus"], "Status" ) 
+	else
+		if isElement(gWindow["achievmentList"]) then
+			dgsSetVisible ( gWindow["achievmentList"], false )
+		end
+		-- WICHTIG: altes Stats-Fenster zuerst entfernen, sonst wird bei jedem
+			-- Aufruf ein weiteres (samt aller 40+ Labels) darueber gestapelt.
+			if isElement ( gWindow["stats"] ) then
+				destroyElement ( gWindow["stats"] )
+			end
+        -- KORRIGIERT: guiSetText -> dgsSetText
+			dgsSetText ( gButtons["selfstatus"], "Sucht" )
+		
+		local job = jobNames[vioClientGetElementData ( "job" )]
+		fraktion = tonumber ( getElementData ( lp, "fraktion" ) )
+		fraktion = fraktionsNamen[fraktion]
+		if not fraktion then
+			fraktion = "Zivilist"
+		end
+		if not job then
+			job = "Arbeitslos"
+		end
+		local playtime = getElementData ( lp, "playingtime" )
+		local playtimehours = math.floor(playtime/60)
+		local playtimeminutes = playtime-playtimehours*60
+		if playtimeminutes < 10 then
+			playtimeminutes = "0"..playtimeminutes
+		end
+		local playtime = playtimehours..":"..playtimeminutes
+		local todayMinutes = vioClientGetElementData ( "timePlayedToday" ) - math.floor ( vioClientGetElementData ( "timePlayedToday" ) / 60 ) * 60
+		if todayMinutes < 10 then
+			todayMinutes = "0"..todayMinutes
+		end
+		local playtimeToday = math.floor ( vioClientGetElementData ( "timePlayedToday" ) / 60 )..":"..todayMinutes
+		if vioClientGetElementData ( "perso" ) == 1 then p = "[x]" else p = "[_]" end
+		if vioClientGetElementData ( "carlicense" ) == 1 then cl = "[x]" else cl = "[_]" end
+		if vioClientGetElementData ( "bikelicense" ) == 1 then bl = "[x]" else bl = "[_]" end
+		if vioClientGetElementData ( "fishinglicense" ) == 1 then fl = "[x]" else fl = "[_]" end
+		if vioClientGetElementData ( "lkwlicense" ) == 1 then ll = "[x]" else ll = "[_]" end
+		if vioClientGetElementData ( "gunlicense" ) == 1 then gl = "[x]" else gl = "[_]" end
+        
+        -- KORRIGIERT: Tippfehler in der Klammerung
+		if vioClientGetElementData ( "motorbootlicense" ) == 1 then mbl = "[x]" else mbl = "[_]" end 
+		
+        if vioClientGetElementData ( "segellicense" ) == 1 then sl = "[x]" else sl = "[_]" end
+		if vioClientGetElementData ( "planelicenseb" ) == 1 then pbl = "[x]" else pbl = "[_]" end
+		if vioClientGetElementData ( "planelicensea" ) == 1 then pal = "[x]" else pal = "[_]" end
+		if vioClientGetElementData ( "helilicense" ) == 1 then hl = "[x]" else hl = "[_]" end
+		local gwd = vioClientGetElementData ( "armyperm10" )
+		if not gwd then
+			gwd = "0 %"
+		else
+			gwd = gwd.." %"
+		end
+		
+		-- Hauptfenster wurde in der Höhe angepasst
+		gWindow["stats"] = dgsCreateWindow(screenwidth/2-477/2, 95, 477, 410, "Spieler Information",false)		dgsWindowSetCloseButtonEnabled(gWindow["stats"], false)
+		dgsWindowSetMovable ( gWindow["stats"], false )
+		dgsWindowSetSizable ( gWindow["stats"], false )
+		dgsSetAlpha(gWindow["stats"],1)
+		
+		-- Labels wurden angepasst
+		gLabel["name"] = dgsCreateLabel(21, 16, 36, 16, "Name:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["name"],1)
+		dgsLabelSetColor(gLabel["name"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["name"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["name"],"left",false)
+		gLabel["spielzeitWert"] = dgsCreateLabel(80, 41, 200, 16, "Heute: "..playtimeToday..", Insg.: "..playtime, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["spielzeitWert"],1)
+		dgsLabelSetColor(gLabel["spielzeitWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["spielzeitWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["spielzeitWert"],"left",false)
+		gLabel["spielzeit"] = dgsCreateLabel(21, 41, 50, 15, "Spielzeit:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["spielzeit"],1)
+		dgsLabelSetColor(gLabel["spielzeit"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["spielzeit"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["spielzeit"],"left",false)
+		gLabel["nameWert"] = dgsCreateLabel(60, 16, 109, 18, getPlayerName(localPlayer), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["nameWert"],1)
+		dgsLabelSetColor(gLabel["nameWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["nameWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["nameWert"],"left",false)
+		gLabel["warns"] = dgsCreateLabel(21, 67, 38, 15, "Warns:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["warns"],1)
+		dgsLabelSetColor(gLabel["warns"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["warns"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["warns"],"left",false)
+		gLabel["warnsWert"] = dgsCreateLabel(65, 67, 109, 18, vioClientGetElementData("warns"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["warnsWert"],1)
+		dgsLabelSetColor(gLabel["warnsWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["warnsWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["warnsWert"],"left",false)
+		gLabel["adminlevel"] = dgsCreateLabel(21, 91, 71, 15, "Admin Level:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["adminlevel"],1)
+		dgsLabelSetColor(gLabel["adminlevel"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["adminlevel"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["adminlevel"],"left",false)
+		gLabel["adminlevelWert"] = dgsCreateLabel(98, 91, 109, 18, tostring(getElementData(lp,"adminlvl")), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["adminlevelWert"],1)
+		dgsLabelSetColor(gLabel["adminlevelWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["adminlevelWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["adminlevelWert"],"left",false)
+		gLabel["fraktion"] = dgsCreateLabel(21, 119, 49, 16, "Fraktion:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["fraktion"],1)
+		dgsLabelSetColor(gLabel["fraktion"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["fraktion"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["fraktion"],"left",false)
+		gLabel["fraktionWert"] = dgsCreateLabel(74, 119, 109, 18, tostring(fraktion), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["fraktionWert"],1)
+		dgsLabelSetColor(gLabel["fraktionWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["fraktionWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["fraktionWert"],"left",false)
+		
+		-- Labels für Tactic Kills und Tode
+		gLabel["tacticKills"] = dgsCreateLabel(21, 144, 91, 16, "Tactic-Kills:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["tacticKills"], 1)
+		dgsLabelSetColor(gLabel["tacticKills"], 255, 255, 255)
+		dgsLabelSetVerticalAlign(gLabel["tacticKills"], "top")
+		dgsLabelSetHorizontalAlign(gLabel["tacticKills"], "left", false)
+		gLabel["tacticKillsWert"] = dgsCreateLabel(117, 144, 109, 18, tostring(getElementData(lp, "TacticKills")), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["tacticKillsWert"], 1)
+		dgsLabelSetColor(gLabel["tacticKillsWert"], 255, 255, 255)
+		dgsLabelSetVerticalAlign(gLabel["tacticKillsWert"], "top")
+		dgsLabelSetHorizontalAlign(gLabel["tacticKillsWert"], "left", false)
+		
+		gLabel["tacticDeaths"] = dgsCreateLabel(20, 166, 86, 16, "Tactic-Tode:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["tacticDeaths"], 1)
+		dgsLabelSetColor(gLabel["tacticDeaths"], 255, 255, 255)
+		dgsLabelSetVerticalAlign(gLabel["tacticDeaths"], "top")
+		dgsLabelSetHorizontalAlign(gLabel["tacticDeaths"], "left", false)
+		gLabel["tacticDeathsWert"] = dgsCreateLabel(112, 166, 109, 18, tostring(getElementData(lp, "TacticTode")), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["tacticDeathsWert"], 1)
+		dgsLabelSetColor(gLabel["tacticDeathsWert"], 255, 255, 255)
+		dgsLabelSetVerticalAlign(gLabel["tacticDeathsWert"], "top")
+		dgsLabelSetHorizontalAlign(gLabel["tacticDeathsWert"], "left", false)
+		
+		-- Gangwar-Statistiken nach oben verschoben
+		gLabel["morde"] = dgsCreateLabel(21, 188, 91, 16, "Gangwar-Morde:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["morde"],1)
+		dgsLabelSetColor(gLabel["morde"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["morde"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["morde"],"left",false)
+		gLabel["mordeWert"] = dgsCreateLabel(117, 188, 109, 18, vioClientGetElementData("GangwarKills"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["mordeWert"],1)
+		dgsLabelSetColor(gLabel["mordeWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["mordeWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["mordeWert"],"left",false)
+		gLabel["tode"] = dgsCreateLabel(20, 211, 86, 16, "Gangwar-Tode:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["tode"],1)
+		dgsLabelSetColor(gLabel["tode"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["tode"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["tode"],"left",false)	
+		gLabel["todeWert"] = dgsCreateLabel(112, 211, 109, 18, vioClientGetElementData("GangwarTode"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["todeWert"],1)
+		dgsLabelSetColor(gLabel["todeWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["todeWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["todeWert"],"left",false)
+		gLabel["gewonnen"] = dgsCreateLabel(20, 233, 116, 16, "Gangwar-Gewonnen:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["gewonnen"],1)
+		dgsLabelSetColor(gLabel["gewonnen"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["gewonnen"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["gewonnen"],"left",false)
+		gLabel["gewonnenAnzahl"] = dgsCreateLabel(142, 233, 109, 18, vioClientGetElementData("AnzahlGangwarsGewonnen"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["gewonnenAnzahl"],1)
+		dgsLabelSetColor(gLabel["gewonnenAnzahl"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["gewonnenAnzahl"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["gewonnenAnzahl"],"left",false)
+		gLabel["verloren"] = dgsCreateLabel(20, 256, 103, 16, "Gangwar-Verloren:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["verloren"],1)
+		dgsLabelSetColor(gLabel["verloren"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["verloren"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["verloren"],"left",false)
+		gLabel["verlorenAnzahl"] = dgsCreateLabel(129, 256, 109, 18, vioClientGetElementData("AnzahlGangwarsVerloren"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["verlorenAnzahl"],1)
+		dgsLabelSetColor(gLabel["verlorenAnzahl"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["verlorenAnzahl"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["verlorenAnzahl"],"left",false)
+		gLabel["paeckchen"] = dgsCreateLabel(20, 278, 130, 16, "Gefundene Paeckchen:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["paeckchen"],1)
+		dgsLabelSetColor(gLabel["paeckchen"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["paeckchen"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["paeckchen"],"left",false)
+		gLabel["paeckchenWert"] = dgsCreateLabel(155, 278, 109, 18, (vioClientGetElementData("foundpackages" ).."/25"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["paeckchenWert"],1)
+		dgsLabelSetColor(gLabel["paeckchenWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["paeckchenWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["paeckchenWert"],"left",false)
+		gLabel["bonuspunkte"] = dgsCreateLabel(19, 303, 78, 16, "Bonuspunkte:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["bonuspunkte"],1)
+		dgsLabelSetColor(gLabel["bonuspunkte"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["bonuspunkte"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["bonuspunkte"],"left",false)
+		gLabel["bonuspunkteWert"] = dgsCreateLabel(102, 303, 109, 18, vioClientGetElementData ( "bonuspoints"), false, gWindow["stats"])
+		dgsSetAlpha(gLabel["bonuspunkteWert"],1)
+		dgsLabelSetColor(gLabel["bonuspunkteWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["bonuspunkteWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["bonuspunkteWert"],"left",false)
+		gLabel["job"] = dgsCreateLabel(18, 327, 25, 15, "Job:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["job"],1)
+		dgsLabelSetColor(gLabel["job"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["job"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["job"],"left",false)
+		gLabel["jobWert"] = dgsCreateLabel(46, 327, 109, 18, job, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["jobWert"],1)
+		dgsLabelSetColor(gLabel["jobWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["jobWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["jobWert"],"left",false)
+		gLabel["geld"] = dgsCreateLabel(18, 350, 98, 15, "Geld (Bar/Bank):", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["geld"],1)
+		dgsLabelSetColor(gLabel["geld"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["geld"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["geld"],"left",false)
+		gLabel["geldWert"] = dgsCreateLabel(123, 350, 109, 18, mymoney.."/"..vioClientGetElementData("bankmoney").." "..Tables.waehrung.."", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["geldWert"],1)
+		dgsLabelSetColor(gLabel["geldWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["geldWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["geldWert"],"left",false)
+		gLabel["personalausweis"] = dgsCreateLabel(291, 16, 92, 16, "Personalausweis:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["personalausweis"],1)
+		dgsLabelSetColor(gLabel["personalausweis"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["personalausweis"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["personalausweis"],"left",false)
+		gLabel["personalausweisWert"] = dgsCreateLabel(395, 16, 81, 16, p, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["personalausweisWert"],1)
+		dgsLabelSetColor(gLabel["personalausweisWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["personalausweisWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["personalausweisWert"],"left",false)
+		gLabel["fuehrerschein"] = dgsCreateLabel(291, 39, 81, 16, "Fuehrerschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["fuehrerschein"],1)
+		dgsLabelSetColor(gLabel["fuehrerschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["fuehrerschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["fuehrerschein"],"left",false)
+		gLabel["fuehrerscheinWert"] = dgsCreateLabel(395, 39, 81, 16, cl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["fuehrerscheinWert"],1)
+		dgsLabelSetColor(gLabel["fuehrerscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["fuehrerscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["fuehrerscheinWert"],"left",false)
+		gLabel["angelschein"] = dgsCreateLabel(291, 62, 72, 16, "Angelschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["angelschein"],1)
+		dgsLabelSetColor(gLabel["angelschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["angelschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["angelschein"],"left",false)
+		gLabel["angelscheinWert"] = dgsCreateLabel(395, 62, 81, 16, fl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["angelscheinWert"],1)
+		dgsLabelSetColor(gLabel["angelscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["angelscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["angelscheinWert"],"left",false)
+		gLabel["motorradschein"] = dgsCreateLabel(291, 86, 87, 15, "Motorradschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["motorradschein"],1)
+		dgsLabelSetColor(gLabel["motorradschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["motorradschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["motorradschein"],"left",false)
+		gLabel["motorradscheinWert"] = dgsCreateLabel(395, 86, 81, 16, bl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["motorradscheinWert"],1)
+		dgsLabelSetColor(gLabel["motorradscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["motorradscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["motorradscheinWert"],"left",false)
+		gLabel["lkwschein"] = dgsCreateLabel(290, 112, 71, 15, "LKW-Schein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["lkwschein"],1)
+		dgsLabelSetColor(gLabel["lkwschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["lkwschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["lkwschein"],"left",false)
+		gLabel["lkwscheinWert"] = dgsCreateLabel(395, 112, 81, 16, ll, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["lkwscheinWert"],1)
+		dgsLabelSetColor(gLabel["lkwscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["lkwscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["lkwscheinWert"],"left",false)
+		gLabel["flugscheina"] = dgsCreateLabel(290, 137, 98, 15, "Flugschein Typ A:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["flugscheina"],1)
+		dgsLabelSetColor(gLabel["flugscheina"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["flugscheina"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["flugscheina"],"left",false)
+		gLabel["flugscheinaWert"] = dgsCreateLabel(395, 137, 81, 16, pal, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["flugscheinaWert"],1)
+		dgsLabelSetColor(gLabel["flugscheinaWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["flugscheinaWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["flugscheinaWert"],"left",false)
+		gLabel["flugscheinb"] = dgsCreateLabel(290, 161, 98, 15, "Flugschein Typ B:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["flugscheinb"],1)
+		dgsLabelSetColor(gLabel["flugscheinb"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["flugscheinb"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["flugscheinb"],"left",false)
+		gLabel["flugscheinbWert"] = dgsCreateLabel(395, 161, 81, 16, pbl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["flugscheinbWert"],1)
+		dgsLabelSetColor(gLabel["flugscheinbWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["flugscheinbWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["flugscheinbWert"],"left",false)
+		gLabel["flugscheinc"] = dgsCreateLabel(290, 183, 98, 15, "Helikopterschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["flugscheinc"],1)
+		dgsLabelSetColor(gLabel["flugscheinc"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["flugscheinc"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["flugscheinc"],"left",false)
+		gLabel["flugscheincWert"] = dgsCreateLabel(395, 183, 81, 16, hl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["flugscheincWert"],1)
+		dgsLabelSetColor(gLabel["flugscheincWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["flugscheincWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["flugscheincWert"],"left",false)
+		gLabel["segelschein"] = dgsCreateLabel(290, 207, 66, 15, "Segelschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["segelschein"],1)
+		dgsLabelSetColor(gLabel["segelschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["segelschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["segelschein"],"left",false)
+		gLabel["segelscheinWert"] = dgsCreateLabel(395, 207, 81, 16, sl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["segelscheinWert"],1)
+		dgsLabelSetColor(gLabel["segelscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["segelscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["segelscheinWert"],"left",false)
+		gLabel["motorbootschein"] = dgsCreateLabel(290, 230, 96, 15, "Motorbootschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["motorbootschein"],1)
+		dgsLabelSetColor(gLabel["motorbootschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["motorbootschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["motorbootschein"],"left",false)
+		gLabel["motorbootscheinWert"] = dgsCreateLabel(395, 230, 81, 16, mbl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["motorbootscheinWert"],1)
+		dgsLabelSetColor(gLabel["motorbootscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["motorbootscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["motorbootscheinWert"],"left",false)
+		gLabel["waffenschein"] = dgsCreateLabel(290, 255, 80, 15, "Waffenschein:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["waffenschein"],1)
+		dgsLabelSetColor(gLabel["waffenschein"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["waffenschein"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["waffenschein"],"left",false)
+		gLabel["waffenscheinWert"] = dgsCreateLabel(395, 255, 81, 16, gl, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["waffenscheinWert"],1)
+		dgsLabelSetColor(gLabel["waffenscheinWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["waffenscheinWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["waffenscheinWert"],"left",false)
+		
+		gLabel["gwd"] = dgsCreateLabel(290, 282, 95, 15, "GWD-Note:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["gwd"],1)
+		dgsLabelSetColor(gLabel["gwd"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["gwd"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["gwd"],"left",false)
+		gLabel["gwdWert"] = dgsCreateLabel(390, 282, 109, 18, gwd, false, gWindow["stats"])
+		dgsSetAlpha(gLabel["gwdWert"],1)
+		dgsLabelSetColor(gLabel["gwdWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["gwdWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["gwdWert"],"left",false)
+		
+		foundViewPoints = vioClientGetElementData ( "viewpoints" )
+		gLabel["geld"] = dgsCreateLabel(290, 305, 98, 15, "Aussichtspunkte:", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["geld"],1)
+		dgsLabelSetColor(gLabel["geld"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["geld"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["geld"],"left",false)
+		gLabel["geldWert"] = dgsCreateLabel(390, 305, 109, 18, foundViewPoints.." / 10", false, gWindow["stats"])
+		dgsSetAlpha(gLabel["geldWert"],1)
+		dgsLabelSetColor(gLabel["geldWert"],255,255,255)
+		dgsLabelSetVerticalAlign(gLabel["geldWert"],"top")
+		dgsLabelSetHorizontalAlign(gLabel["geldWert"],"left",false)
+	end
+end

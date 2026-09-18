@@ -1,0 +1,6 @@
+<map edf:definitions="editor_main">
+    <object id="object (cxref_woodstair) (1)" breakable="true" interior="0" alpha="255" dimension="0" model="3361" scale="1" doublesided="false" collisions="true" posX="-1334.9" posY="479.79999" posZ="9.13" rotX="0" rotY="0" rotZ="270"></object>
+    <object id="object (cxref_woodstair) (2)" breakable="true" interior="0" alpha="255" dimension="0" model="3361" scale="1" doublesided="false" collisions="true" posX="-1334.9" posY="489.642" posZ="9.13" rotX="0" rotY="0" rotZ="90"></object>
+    <object id="object (fencesmallb) (1)" breakable="true" interior="0" alpha="255" dimension="0" model="970" scale="1" doublesided="false" collisions="true" posX="-1335.9" posY="484.70001" posZ="11.8" rotX="0" rotY="0" rotZ="90"></object>
+    <object id="object (fencesmallb) (2)" breakable="true" interior="0" alpha="255" dimension="0" model="970" scale="1" doublesided="false" collisions="true" posX="-1333.9" posY="484.79999" posZ="11.8" rotX="0" rotY="0" rotZ="90"></object>
+</map>

@@ -1,0 +1,14 @@
+# Die Seiten hier duerfen nur ueber index.php eingebunden werden.
+#
+# Ruft man sie direkt auf (z.B. .../pages/admin-players.php), fehlen die
+# Anmeldedaten. Es kaeme kein Zugriff auf fremde Daten zustande, aber PHP
+# wuerde Fehlermeldungen mit Dateipfaden ausgeben - das muss nicht sein.
+
+<IfModule mod_authz_core.c>
+	Require all denied
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+	Order allow,deny
+	Deny from all
+</IfModule>

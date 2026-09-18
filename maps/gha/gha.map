@@ -1,0 +1,13 @@
+<map edf:definitions="editor_main">
+    <removeWorldObject id="removeWorldObject (lamppost3) (1)" radius="6.6149273" interior="0" model="1226" lodModel="0" posX="-2238.5515" posY="1015.4974" posZ="83.95194" rotX="0" rotY="0" rotZ="0"></removeWorldObject>
+    <object id="object (shamheliprt04) (1)" breakable="true" interior="0" alpha="255" model="6976" doublesided="false" scale="1" dimension="0" posX="-2198.3999" posY="981.2998" posZ="75.3" rotX="0" rotY="0" rotZ="270"></object>
+    <object id="object (helipad01) (1)" breakable="true" interior="0" alpha="255" model="3934" doublesided="false" scale="1" dimension="0" posX="-2205.2" posY="1000.6" posZ="83.9" rotX="0" rotY="0" rotZ="0"></object>
+    <object id="object (helipad01) (2)" breakable="true" interior="0" alpha="255" model="3934" doublesided="false" scale="1" dimension="0" posX="-2205.6001" posY="977.59998" posZ="83.9" rotX="0" rotY="0" rotZ="0"></object>
+    <object id="object (elecfence_BAR) (1)" breakable="true" interior="0" alpha="255" model="987" doublesided="false" scale="1" dimension="0" posX="-2238.7" posY="1028.5" posZ="82.6" rotX="0" rotY="0" rotZ="270"></object>
+    <object id="object (elecfence_BAR) (2)" breakable="true" interior="0" alpha="255" model="987" doublesided="false" scale="1" dimension="0" posX="-2238.7" posY="1016.5" posZ="82.6" rotX="0" rotY="0" rotZ="269.995"></object>
+    <removeWorldObject id="removeWorldObject (MTraffic1) (1)" radius="11.08576" interior="0" model="1283" lodModel="0" posX="-2157.3843" posY="1011.6539" posZ="80.59009" rotX="0" rotY="0" rotZ="0"></removeWorldObject>
+    <removeWorldObject id="removeWorldObject (lamppost3) (2)" radius="6.6149273" interior="0" model="1226" lodModel="0" posX="-2174.0266" posY="1015.6908" posZ="80.9734" rotX="0" rotY="0" rotZ="0"></removeWorldObject>
+    <removeWorldObject id="removeWorldObject (lamppost3) (3)" radius="6.6149273" interior="0" model="1226" lodModel="0" posX="-2206.0325" posY="1023.7557" posZ="82.39559" rotX="0" rotY="0" rotZ="0"></removeWorldObject>
+    <object id="object (ClubGate01_LAx) (1)" breakable="true" interior="0" alpha="255" model="3749" doublesided="false" scale="1" dimension="0" posX="-2162.7" posY="1019.7" posZ="84.7" rotX="0" rotY="0" rotZ="90"></object>
+    <removeWorldObject id="removeWorldObject (tree_hipoly11) (1)" radius="21.661509" interior="0" model="733" lodModel="0" posX="-2213.8281" posY="997.45313" posZ="79.65625" rotX="0" rotY="0" rotZ="0"></removeWorldObject>
+</map>
