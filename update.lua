@@ -2,7 +2,7 @@
 -- I. KONFIGURATION
 -- ==========================================================
 local REPO_USER = "PlayasEmre"
-local REPO_NAME = "ICE-Reallife-Release"
+local REPO_NAME = "MTASA-ICE-Reallife-Release"
 local RES_NAME = "ICE"
 local REPO_BRANCH = "main"
 local LAST_COMMIT_FILE = "last_commit.txt"
